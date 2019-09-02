@@ -1,7 +1,7 @@
 // Your web app's Firebase configuration
 var firebaseConfig = {
     apiKey: "AIzaSyADpSoSf_rcv-LNUZw23czp9LeY4f6V6xg",
-    authDomain: "attendance.masonhackclub.com",
+    authDomain: "auth.attendance.masonhackclub.com",
     databaseURL: "https://attendance-902c5.firebaseio.com",
     projectId: "attendance-902c5",
     storageBucket: "attendance-902c5.appspot.com",

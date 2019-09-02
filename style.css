@@ -16,6 +16,7 @@ body, html {
 
 #sign-in-buttons {
     display: flex;
+    flex-direction: column;
     height: 90%;
     width: 100%;
     justify-content: center;
@@ -68,4 +69,11 @@ img#logo {
     display: flex;
     justify-content: center;
     padding:10px;
+}
+
+.note {
+    font-weight: 300;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    color: rgba(0,0,0,0.58);
+    font-size: 10px;
 }
