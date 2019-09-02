@@ -1,3 +1,17 @@
+// Your web app's Firebase configuration
+var firebaseConfig = {
+    apiKey: "AIzaSyADpSoSf_rcv-LNUZw23czp9LeY4f6V6xg",
+    authDomain: "attendance.masonhackclub.com",
+    databaseURL: "https://attendance-902c5.firebaseio.com",
+    projectId: "attendance-902c5",
+    storageBucket: "attendance-902c5.appspot.com",
+    messagingSenderId: "552343475963",
+    appId: "1:552343475963:web:6d6563fc36b32f8e"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+
 //get the secret key that verifies that it came from a valid source
 const urlParams = new URLSearchParams(window.location.search);
 const skey = urlParams.get('skey');
