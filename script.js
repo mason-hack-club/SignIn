@@ -47,13 +47,13 @@ var initSignIn = function() {
 var provider = new firebase.auth.GoogleAuthProvider();
 provider.addScope('profile');
 provider.addScope('email');
-provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-provider.addScope('https://www.googleapis.com/auth/user.addresses.read');
-provider.addScope('https://www.googleapis.com/auth/user.birthday.read');
+// provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+// provider.addScope('https://www.googleapis.com/auth/user.addresses.read');
+// provider.addScope('https://www.googleapis.com/auth/user.birthday.read');
 provider.addScope('https://www.googleapis.com/auth/user.emails.read');
 provider.addScope('https://www.googleapis.com/auth/user.phonenumbers.read');
-provider.addScope('https://www.googleapis.com/auth/calendar.readonly');
-provider.addScope('https://www.googleapis.com/auth/calendar.events.readonly');
+// provider.addScope('https://www.googleapis.com/auth/calendar.readonly');
+// provider.addScope('https://www.googleapis.com/auth/calendar.events.readonly');
 provider.setCustomParameter({'hd':'masonohioschools.com'});
 
 
