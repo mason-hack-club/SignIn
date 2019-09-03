@@ -64,6 +64,7 @@ var saveAttendanceData = function(user, skey) {
         photo: user.photoURL,
         updated: firebase.firestore.FieldValue.serverTimestamp(),
     }, {merge: true});
+    console.log("skey is: " + skey);
     db.collection('SignIns').doc(skey).update({
         [user.email]: firebase.firestore.FieldValue.serverTimestamp(),
     });
