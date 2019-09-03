@@ -23,7 +23,6 @@ firebase.auth().onAuthStateChanged(function(user) {
             // User is signed in.
             if (skey != null) {
                 // secret key is defined
-                saveAttendanceData(user);
                 var displayName = user.displayName;
                 var email = user.email;
                 var emailVerified = user.emailVerified;
@@ -63,6 +62,7 @@ var saveAttendanceData = function(user, secretKey) {
         phoneNumer: user.phoneNumber,
         uid: user.uid,
         photo: user.photoURL,
+        providerData : user.providerData,
         updated: firebase.firestore.FieldValue.serverTimestamp(),
     }, {merge: true});
     console.log("skey is: " + secretKey);
