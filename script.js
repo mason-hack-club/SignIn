@@ -30,17 +30,18 @@ firebase.auth().onAuthStateChanged(function(user) {
             var uid = user.uid;
             var providerData = user.providerData;
             saveAttendanceData(user);
-            // window.location.href="post-login";
+            window.location.href="post-login";
+        } else {
+            // User is signed in with a non-mason account
+            user.delete().then(function () {
+                firebase.auth().signOut()
+            }).catch(function (error) {
+                console.log(error);
+            });
+            var alert = document.createElement('h1');
+            alert.innerText = "Please Sign In with your Mason Google Account";
+            document.getElementById('sign-in-buttons').prepend(alert);
         }
-        // User is signed in with a non-mason account
-        user.delete().then(function() {
-            firebase.auth().signOut()
-        }).catch(function(error) {
-            console.log(error);
-        });
-        var alert = document.createElement('h1');
-        alert.innerText = "Please Sign In with your Mason Google Account";
-        document.getElementById('sign-in-buttons').prepend(alert);
     } else {
         //not signed in yet
     }
@@ -48,7 +49,16 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 var saveAttendanceData = function(user) {
-    console.log(user);
+    var db = firebase.firestore();
+    db.collection('Userdata').doc(user.email).set({
+        name : user.displayName,
+        email: user.email,
+        phoneNumer: user.phoneNumber,
+        uid: user.uid,
+        photo: user.photoURL,
+        updated: firebase.firestore.Timestamp.fromDate(new Date()),
+    }, {merge: true});
+    db.collection('SignIns').doc()
 };
 
 //make the user sign out on page reload
@@ -91,8 +101,6 @@ provider.addScope('email');
 // provider.addScope('https://www.googleapis.com/auth/user.phonenumbers.read');
 // provider.addScope('https://www.googleapis.com/auth/calendar.readonly');
 // provider.addScope('https://www.googleapis.com/auth/calendar.events.readonly');
-provider.setCustomParameters({'hd':'masonohioschools.com'});
-
-
+provider.setCustomParameters({'hd':'masonohioschools.com','state':'666'});
 
 
