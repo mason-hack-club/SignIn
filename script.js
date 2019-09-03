@@ -71,9 +71,9 @@ var saveAttendanceData = function(user, secretKey) {
         console.log(error);
     });
     console.log("skey is: " + secretKey);
-    db.collection('SignIns').doc(secretKey).update({
+    db.collection('SignIns').doc(secretKey).set({
         [user.email]: firebase.firestore.FieldValue.serverTimestamp(),
-    }).then(function(){
+    },{merge:true}).then(function(){
         console.log('timestamped successed');
     }).catch(function(error){
         console.log(error);
