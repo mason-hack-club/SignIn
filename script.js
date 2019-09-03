@@ -38,10 +38,11 @@ firebase.auth().onAuthStateChanged(function(user) {
         });
         var alert = document.createElement('h1');
         alert.innerText = "Please Sign In with your Mason Google Account";
-        document.getElementById('sign-in-buttons').appendChild(alert);
+        document.getElementById('sign-in-buttons').prepend(alert);
     } else {
         //not signed in yet
     }
+    console.log(user);
 });
 
 var saveAttendanceData = function(user) {
