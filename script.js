@@ -18,6 +18,8 @@ const skey = urlParams.get('skey');
 //once redirected back to mason
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
+        console.log(user.email.split('@')[1]);
+        console.log(user.email.split('@')[1] === 'masonohioschools.com');
         if(user.email.split('@')[1] === 'masonohioschools.com') {
             // User is signed in.
             var displayName = user.displayName;
