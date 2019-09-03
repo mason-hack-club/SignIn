@@ -57,7 +57,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 var saveAttendanceData = function(user, secretKey) {
     console.log(user.email);
-    db.collection('Userdata').doc((user.email)).set({
+    db.collection('Userdata').doc(user.email).set({
         name : user.displayName,
         email: user.email,
         phoneNumer: user.phoneNumber,
@@ -71,7 +71,7 @@ var saveAttendanceData = function(user, secretKey) {
         console.log(error);
     });
     console.log("skey is: " + secretKey);
-    db.collection('SignIns').doc(secretKey).set({
+    db.collection('SignIns').doc(secretKey).collection('members').doc(user.email).set({
         [user.email]: firebase.firestore.FieldValue.serverTimestamp(),
     },{merge:true}).then(function(){
         console.log('timestamped successed');
