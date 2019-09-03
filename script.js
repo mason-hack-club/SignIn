@@ -10,6 +10,7 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+var db = firebase.firestore();
 
 //get the secret key that verifies that it came from a valid source
 const urlParams = new URLSearchParams(window.location.search);
@@ -55,7 +56,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 var saveAttendanceData = function(user, secretKey) {
-    var db = firebase.firestore();
     console.log(user.email);
     db.collection('Userdata').doc((user.email)).set({
         name : user.displayName,
