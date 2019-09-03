@@ -77,3 +77,8 @@ img#logo {
     color: rgba(0,0,0,0.58);
     font-size: 10px;
 }
+
+h1 {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    color: rgb(239, 66, 66);
+}

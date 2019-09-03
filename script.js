@@ -40,9 +40,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         alert.innerText = "Please Sign In with your Mason Google Account";
         document.getElementById('sign-in-buttons').appendChild(alert);
     } else {
-        var alert = document.createElement('h1');
-        alert.innerText = "Sign In Failed";
-        document.getElementById('sign-in-buttons').appendChild(alert);
+        //not signed in yet
     }
 });
 
