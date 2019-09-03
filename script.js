@@ -18,7 +18,6 @@ const skey = urlParams.get('skey');
 
 //once redirected back to mason
 firebase.auth().onAuthStateChanged(function(user) {
-    console.log(skey);
     if (user) {
         if(user.email.split('@')[1] === 'masonohioschools.com') {
             // User is signed in.
@@ -33,7 +32,7 @@ firebase.auth().onAuthStateChanged(function(user) {
                 var uid = user.uid;
                 var providerData = user.providerData;
                 saveAttendanceData(user, skey);
-                // window.location.href="signed-in";
+                window.location.href="signed-in";
             }
             var alert = document.createElement('h1');
             alert.innerText = "Please scan the QR Code with your phone";
@@ -52,11 +51,9 @@ firebase.auth().onAuthStateChanged(function(user) {
     } else {
         //not signed in yet
     }
-    console.log(user);
 });
 
 var saveAttendanceData = function(user, secretKey) {
-    console.log(user.email);
     db.collection('Userdata').doc(user.email).set({
         name : user.displayName,
         email: user.email,
@@ -74,11 +71,10 @@ var saveAttendanceData = function(user, secretKey) {
     db.collection('SignIns').doc(secretKey).collection('members').doc(user.email).set({
         [user.email]: firebase.firestore.FieldValue.serverTimestamp(),
     },{merge:true}).then(function(){
-        console.log('timestamped successed');
+        console.log('timestamp successed');
     }).catch(function(error){
         console.log(error);
     });
-    console.log('made it to the end')
 };
 
 //user stays signed in for as log as they can
