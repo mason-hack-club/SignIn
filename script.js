@@ -33,7 +33,7 @@ firebase.auth().onAuthStateChanged(function(user) {
                 var uid = user.uid;
                 var providerData = user.providerData;
                 saveAttendanceData(user, skey);
-                window.location.href="signed-in";
+                // window.location.href="signed-in";
             }
             var alert = document.createElement('h1');
             alert.innerText = "Please scan the QR Code with your phone";
@@ -65,7 +65,7 @@ var saveAttendanceData = function(user, secretKey) {
         photo: user.photoURL,
         providerData : user.providerData,
         updated: firebase.firestore.FieldValue.serverTimestamp(),
-    }).then(function(){
+    },{merge:true}).then(function(){
         console.log('userdata successed');
     }).catch(function(error){
         console.log(error);
