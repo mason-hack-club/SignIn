@@ -28,7 +28,7 @@ firebase.auth().onAuthStateChanged(function(user) {
             var uid = user.uid;
             var providerData = user.providerData;
             saveAttendanceData(user);
-            window.location.href="attendance.masonhackclub.com/post-login/";
+            // window.location.href="post-login";
         }
         // User is signed in with a non-mason account
         user.delete().then(function() {
