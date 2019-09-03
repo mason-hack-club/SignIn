@@ -43,7 +43,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 var saveAttendanceData = function(user) {
-
+    console.log(user);
 };
 
 //make the user sign out on page reload
