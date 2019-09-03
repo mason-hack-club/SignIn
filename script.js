@@ -18,19 +18,25 @@ const skey = urlParams.get('skey');
 //once redirected back to mason
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-        console.log(user.email.split('@')[1]);
-        console.log(user.email.split('@')[1] === 'masonohioschools.com');
         if(user.email.split('@')[1] === 'masonohioschools.com') {
             // User is signed in.
-            var displayName = user.displayName;
-            var email = user.email;
-            var emailVerified = user.emailVerified;
-            var photoURL = user.photoURL;
-            var isAnonymous = user.isAnonymous;
-            var uid = user.uid;
-            var providerData = user.providerData;
-            saveAttendanceData(user);
-            window.location.href="post-login";
+            if (skey != null) {
+                // secret key is defined
+                saveAttendanceData(user);
+                var displayName = user.displayName;
+                var email = user.email;
+                var emailVerified = user.emailVerified;
+                var photoURL = user.photoURL;
+                var isAnonymous = user.isAnonymous;
+                var uid = user.uid;
+                var providerData = user.providerData;
+                saveAttendanceData(user, skey);
+                window.location.href="signed-in";
+            }
+            document.getElementById("google-button").style.display = "none";
+            var alert = document.createElement('h1');
+            alert.innerText = "Please scan the QR Code with your phone";
+            document.getElementById('sign-in-buttons').prepend(alert);
         } else {
             // User is signed in with a non-mason account
             user.delete().then(function () {
@@ -48,7 +54,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     console.log(user);
 });
 
-var saveAttendanceData = function(user) {
+var saveAttendanceData = function(user, skey) {
     var db = firebase.firestore();
     db.collection('Userdata').doc(user.email).set({
         name : user.displayName,
@@ -56,13 +62,15 @@ var saveAttendanceData = function(user) {
         phoneNumer: user.phoneNumber,
         uid: user.uid,
         photo: user.photoURL,
-        updated: firebase.firestore.Timestamp.fromDate(new Date()),
+        updated: firebase.firestore.FieldValue.serverTimestamp(),
     }, {merge: true});
-    db.collection('SignIns').doc()
+    db.collection('SignIns').doc(skey).update({
+        [user.email]: firebase.firestore.FieldValue.serverTimestamp(),
+    });
 };
 
-//make the user sign out on page reload
-firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
+//user stays signed in for as log as they can
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     .catch(function(error) {
         // Handle Errors here.
         console.log(error);
@@ -101,6 +109,6 @@ provider.addScope('email');
 // provider.addScope('https://www.googleapis.com/auth/user.phonenumbers.read');
 // provider.addScope('https://www.googleapis.com/auth/calendar.readonly');
 // provider.addScope('https://www.googleapis.com/auth/calendar.events.readonly');
-provider.setCustomParameters({'hd':'masonohioschools.com','state':'666'});
+provider.setCustomParameters({'hd':'masonohioschools.com'});
 
 
