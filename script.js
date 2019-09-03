@@ -65,7 +65,7 @@ var saveAttendanceData = function(user, secretKey) {
         photo: user.photoURL,
         providerData : user.providerData,
         updated: firebase.firestore.FieldValue.serverTimestamp(),
-    }, {merge: true}).then(function(){
+    }).then(function(){
         console.log('userdata successed');
     }).catch(function(error){
         console.log(error);
