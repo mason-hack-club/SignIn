@@ -56,7 +56,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 var saveAttendanceData = function(user, secretKey) {
     var db = firebase.firestore();
-    db.collection('Userdata').doc(user.email).set({
+    console.log(user.email);
+    db.collection('Userdata').doc((user.email)).set({
         name : user.displayName,
         email: user.email,
         phoneNumer: user.phoneNumber,
