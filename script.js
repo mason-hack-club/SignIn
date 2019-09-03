@@ -64,15 +64,20 @@ var saveAttendanceData = function(user, secretKey) {
         photo: user.photoURL,
         providerData : user.providerData,
         updated: firebase.firestore.FieldValue.serverTimestamp(),
-    }, {merge: true}).catch(function(error){
+    }, {merge: true}).then(function(){
+        console.log('userdata successed');
+    }).catch(function(error){
         console.log(error);
     });
     console.log("skey is: " + secretKey);
     db.collection('SignIns').doc(secretKey).update({
         [user.email]: firebase.firestore.FieldValue.serverTimestamp(),
+    }).then(function(){
+        console.log('timestamped successed');
     }).catch(function(error){
         console.log(error);
     });
+    console.log('made it to the end')
 };
 
 //user stays signed in for as log as they can
