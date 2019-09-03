@@ -32,7 +32,6 @@ firebase.auth().onAuthStateChanged(function(user) {
                 var uid = user.uid;
                 var providerData = user.providerData;
                 saveAttendanceData(user, skey);
-                window.location.href="signed-in";
             }
             var alert = document.createElement('h1');
             alert.innerText = "Please scan the QR Code with your phone";
@@ -72,6 +71,7 @@ var saveAttendanceData = function(user, secretKey) {
         [user.email]: firebase.firestore.FieldValue.serverTimestamp(),
     },{merge:true}).then(function(){
         console.log('timestamp successed');
+        window.location.href="signed-in";
     }).catch(function(error){
         console.log(error);
     });
