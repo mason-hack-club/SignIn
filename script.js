@@ -21,6 +21,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         if(user.email.split('@')[1] === 'masonohioschools.com') {
             // User is signed in.
+            document.getElementById("google-button").style.display = "none";
             if (skey != null) {
                 // secret key is defined
                 var displayName = user.displayName;
@@ -31,9 +32,8 @@ firebase.auth().onAuthStateChanged(function(user) {
                 var uid = user.uid;
                 var providerData = user.providerData;
                 saveAttendanceData(user, skey);
-                window.location.href="signed-in";
+                // window.location.href="signed-in";
             }
-            document.getElementById("google-button").style.display = "none";
             var alert = document.createElement('h1');
             alert.innerText = "Please scan the QR Code with your phone";
             document.getElementById('sign-in-buttons').prepend(alert);
@@ -64,10 +64,14 @@ var saveAttendanceData = function(user, secretKey) {
         photo: user.photoURL,
         providerData : user.providerData,
         updated: firebase.firestore.FieldValue.serverTimestamp(),
-    }, {merge: true});
+    }, {merge: true}).catch(function(error){
+        console.log(error);
+    });
     console.log("skey is: " + secretKey);
     db.collection('SignIns').doc(secretKey).update({
         [user.email]: firebase.firestore.FieldValue.serverTimestamp(),
+    }).catch(function(error){
+        console.log(error);
     });
 };
 
