@@ -91,7 +91,7 @@ provider.addScope('email');
 // provider.addScope('https://www.googleapis.com/auth/user.phonenumbers.read');
 // provider.addScope('https://www.googleapis.com/auth/calendar.readonly');
 // provider.addScope('https://www.googleapis.com/auth/calendar.events.readonly');
-provider.setCustomParameter({'hd':'masonohioschools.com'});
+provider.setCustomParameters({'hd':'masonohioschools.com'});
 
 
 
