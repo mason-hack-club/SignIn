@@ -11,15 +11,46 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-
 //get the secret key that verifies that it came from a valid source
 const urlParams = new URLSearchParams(window.location.search);
 const skey = urlParams.get('skey');
+
+//once redirected back to mason
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        if(user.email.split('@')[1] === 'masonohioschools.com') {
+            // User is signed in.
+            var displayName = user.displayName;
+            var email = user.email;
+            var emailVerified = user.emailVerified;
+            var photoURL = user.photoURL;
+            var isAnonymous = user.isAnonymous;
+            var uid = user.uid;
+            var providerData = user.providerData;
+            saveAttendanceData(user);
+            window.location.href="attendance.masonhackclub.com/post-login/";
+        }
+        // User is signed in with a non-mason account
+        user.delete().then(function() {
+            firebase.auth().signOut()
+        }).catch(function(error) {
+            console.log(error);
+        });
+        document.getElementById('sign-in-buttons').append("<h1>Please Sign In with your Mason Google Account</h1>");
+    } else {
+
+    }
+});
+
+var saveAttendanceData = function(user) {
+
+};
 
 //make the user sign out on page reload
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
     .catch(function(error) {
         // Handle Errors here.
+        console.log(error);
         var errorCode = error.code;
         var errorMessage = error.message;
     });
@@ -34,6 +65,7 @@ var initSignIn = function() {
         // ...
     }).catch(function(error) {
         // Handle Errors here.
+        console.log(error);
         var errorCode = error.code;
         var errorMessage = error.message;
         // The email of the user's account used.
@@ -50,7 +82,7 @@ provider.addScope('email');
 // provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
 // provider.addScope('https://www.googleapis.com/auth/user.addresses.read');
 // provider.addScope('https://www.googleapis.com/auth/user.birthday.read');
-provider.addScope('https://www.googleapis.com/auth/user.emails.read');
+// provider.addScope('https://www.googleapis.com/auth/user.emails.read');
 provider.addScope('https://www.googleapis.com/auth/user.phonenumbers.read');
 // provider.addScope('https://www.googleapis.com/auth/calendar.readonly');
 // provider.addScope('https://www.googleapis.com/auth/calendar.events.readonly');
