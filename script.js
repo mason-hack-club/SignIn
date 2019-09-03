@@ -55,7 +55,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     console.log(user);
 });
 
-var saveAttendanceData = function(user, skey) {
+var saveAttendanceData = function(user, secretKey) {
     var db = firebase.firestore();
     db.collection('Userdata').doc(user.email).set({
         name : user.displayName,
@@ -65,8 +65,8 @@ var saveAttendanceData = function(user, skey) {
         photo: user.photoURL,
         updated: firebase.firestore.FieldValue.serverTimestamp(),
     }, {merge: true});
-    console.log("skey is: " + skey);
-    db.collection('SignIns').doc(skey).update({
+    console.log("skey is: " + secretKey);
+    db.collection('SignIns').doc(secretKey).update({
         [user.email]: firebase.firestore.FieldValue.serverTimestamp(),
     });
 };
