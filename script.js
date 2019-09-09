@@ -15,6 +15,7 @@ var db = firebase.firestore();
 //get the secret key that verifies that it came from a valid source
 const urlParams = new URLSearchParams(window.location.search);
 const skey = urlParams.get('skey');
+const finalLink=urlParams.get('fl');
 
 //once redirected back to mason
 firebase.auth().onAuthStateChanged(function(user) {
@@ -71,7 +72,7 @@ var saveAttendanceData = function(user, secretKey) {
         [user.email]: firebase.firestore.FieldValue.serverTimestamp(),
     },{merge:true}).then(function(){
         console.log('timestamp successed');
-        window.location.href="signed-in";
+        window.location.href="signed-in/?fl="+finalLink;
     }).catch(function(error){
         console.log(error);
     });
