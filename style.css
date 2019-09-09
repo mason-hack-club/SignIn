@@ -82,3 +82,18 @@ h1 {
     font-family: Roboto, Helvetica, Arial, sans-serif;
     color: rgb(239, 66, 66);
 }
+
+a:hover {
+    color: rgb(239,66,66);
+    text-decoration: underline;
+}
+
+a {
+    color: dimgrey;
+    text-decoration: none;
+}
+
+p {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    color: dimgrey;
+}
