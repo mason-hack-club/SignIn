@@ -54,12 +54,13 @@ body, html {
 
 
 img#logo {
-    height: 80px;
-    width: unset;
+    height: unset;
+    width: 100%;
 }
 
 #header {
-    padding: 10px;
+    width: 100%;
+    padding: 30px;
     display: flex;
     align-content: center;
     background: rgba(239, 114, 113, 0.95);
