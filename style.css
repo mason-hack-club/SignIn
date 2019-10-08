@@ -79,12 +79,15 @@ img#logo {
     font-weight: 300;
     font-family: Roboto, Helvetica, Arial, sans-serif;
     color: rgba(0,0,0,0.58);
-    font-size: 10px;
+    font-size: 40px;
+    text-align: center;
 }
 
 h1 {
     font-family: Roboto, Helvetica, Arial, sans-serif;
     color: rgb(239, 66, 66);
+    font-size: 70px;
+    text-align: center;
 }
 
 a:hover {
