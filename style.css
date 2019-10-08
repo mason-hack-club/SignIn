@@ -103,4 +103,6 @@ a {
 p {
     font-family: Roboto, Helvetica, Arial, sans-serif;
     color: dimgrey;
+    font-size: 50px;
+    text-align: center;
 }
