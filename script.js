@@ -54,6 +54,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 var saveAttendanceData = function(user, secretKey) {
+    //update/save a copy of the user to the Userdata bucket
     db.collection('Userdata').doc(user.email).set({
         name : user.displayName,
         email: user.email,
@@ -67,7 +68,9 @@ var saveAttendanceData = function(user, secretKey) {
     }).catch(function(error){
         console.log(error);
     });
+
     console.log("skey is: " + secretKey);
+    //use the skey to create a collection based on a single meeting
     db.collection('SignIns').doc(secretKey).collection('members').doc(user.email).set({
         [user.email]: firebase.firestore.FieldValue.serverTimestamp(),
     },{merge:true}).then(function(){
@@ -111,13 +114,6 @@ var initSignIn = function() {
 var provider = new firebase.auth.GoogleAuthProvider();
 provider.addScope('profile');
 provider.addScope('email');
-// provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-// provider.addScope('https://www.googleapis.com/auth/user.addresses.read');
-// provider.addScope('https://www.googleapis.com/auth/user.birthday.read');
-// provider.addScope('https://www.googleapis.com/auth/user.emails.read');
-// provider.addScope('https://www.googleapis.com/auth/user.phonenumbers.read');
-// provider.addScope('https://www.googleapis.com/auth/calendar.readonly');
-// provider.addScope('https://www.googleapis.com/auth/calendar.events.readonly');
 provider.setCustomParameters({'hd':'masonohioschools.com'});
 
 
