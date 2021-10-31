@@ -43,7 +43,6 @@ body, html {
 }
 
 #google-button span {
-
     color: #757575;
     margin: 15px;
     font-size: 70px;
@@ -78,14 +77,12 @@ img#logo {
 
 .note {
     font-weight: 300;
-
     color: rgba(0,0,0,0.58);
     font-size: 40px;
     text-align: center;
 }
 
 h1 {
-
     color: rgb(239, 66, 66);
     font-size: 70px;
     text-align: center;
@@ -102,7 +99,6 @@ a {
 }
 
 p {
-    font-family: Roboto, Helvetica, Arial, sans-serif;
     color: dimgrey;
     font-size: 50px;
     text-align: center;
