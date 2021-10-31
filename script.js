@@ -15,7 +15,7 @@ var db = firebase.firestore();
 //get the secret key that verifies that it came from a valid source
 const urlParams = new URLSearchParams(window.location.search);
 const skey = urlParams.get('skey');
-const finalLink=urlParams.get('fl');
+const finalLink = urlParams.get('fl');
 
 //once redirected back to mason
 firebase.auth().onAuthStateChanged(function(user) {
@@ -33,6 +33,7 @@ firebase.auth().onAuthStateChanged(function(user) {
                 var uid = user.uid;
                 var providerData = user.providerData;
                 saveAttendanceData(user, skey);
+                //user should get redirected by this function. If it fails, it continues into the next bit
             }
             var alert = document.createElement('h1');
             alert.innerText = "Please scan the QR Code with your phone";
@@ -55,6 +56,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 var saveAttendanceData = function(user, secretKey) {
     //update/save a copy of the user to the Userdata bucket
+    //should be able to look at the UserData collection for roster moves
+    //might be worth refactoring into pulling their data, analyzing it and merging manually
     db.collection('Userdata').doc(user.email).set({
         name : user.displayName,
         email: user.email,
@@ -69,12 +72,11 @@ var saveAttendanceData = function(user, secretKey) {
         console.log(error);
     });
 
-    console.log("skey is: " + secretKey);
     //use the skey to create a collection based on a single meeting
     db.collection('SignIns').doc(secretKey).collection('members').doc(user.email).set({
         [user.email]: firebase.firestore.FieldValue.serverTimestamp(),
     },{merge:true}).then(function(){
-        console.log('timestamp successed');
+        //redirect via JS to signed in page
         window.location.href="signed-in/?fl="+finalLink;
     }).catch(function(error){
         console.log(error);
@@ -86,8 +88,6 @@ firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     .catch(function(error) {
         // Handle Errors here.
         console.log(error);
-        var errorCode = error.code;
-        var errorMessage = error.message;
     });
 
 //sign in function
@@ -97,23 +97,20 @@ var initSignIn = function() {
         var token = result.credential.accessToken;
         // The signed-in user info.
         var user = result.user;
-        // ...
+        // I haven't done anything here. But you could send them emails or something else
     }).catch(function(error) {
         // Handle Errors here.
         console.log(error);
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        // ...
+
     });
 };
 
+//Now that everything is defined, make auth provider
 var provider = new firebase.auth.GoogleAuthProvider();
 provider.addScope('profile');
 provider.addScope('email');
+
+//Encourages people to use Mason account
 provider.setCustomParameters({'hd':'masonohioschools.com'});
 
 
